@@ -8,8 +8,9 @@ namespace MailtrapConsoleApp
     {
         static void Main(string[] args)
         {
-            Papercut();
-            Mailtrap();
+            //Papercut();
+            //MailtrapSMTPServer();
+            GmailSMTPServer();
         }
 
 
@@ -19,7 +20,7 @@ namespace MailtrapConsoleApp
         static void Papercut()
         {
             var client = new SmtpClient("127.0.0.1", 25);
-            client.Send("from@example.com", "to@example.com", "Hello Armen", "testbody");
+            client.Send("from@example.com", "to@example.com", "Hello", "testbody");
             Console.WriteLine("Sent");
             Console.ReadLine();
         }
@@ -29,13 +30,13 @@ namespace MailtrapConsoleApp
         /// https://mailtrap.io
         /// https://www.romaniancoder.com/email-testing-for-developers-with-mailtrap/
         /// </summary>
-        static void Mailtrap()
+        static void MailtrapSMTPServer()
         {
             int EmailClientPort = 2525;
             string EmailClientHost = "smtp.mailtrap.io";
             bool EmailClientEnableSSL = true;
-            string EmailClientUserName = "1d369290732e64";
-            string EmailClientPassword = "b26f5fbf5a9a60";
+            string EmailClientUserName = "username";
+            string EmailClientPassword = "password";
 
 
             // Create email sender with properties defined bellow
@@ -56,6 +57,35 @@ namespace MailtrapConsoleApp
             Console.WriteLine("Sent");
             Console.ReadLine();
 
+        }
+
+
+        /// <summary>
+        /// http://csharp.net-informations.com/communications/csharp-smtp-mail.htm
+        /// </summary>
+        static void GmailSMTPServer()
+        {
+            try
+            {
+                MailMessage mail = new MailMessage();
+                SmtpClient SmtpServer = new SmtpClient("smtp.gmail.com");
+
+                mail.From = new MailAddress("your_email_address@gmail.com");
+                mail.To.Add("to_address");
+                mail.Subject = "Test Mail";
+                mail.Body = "This is for testing SMTP mail from GMAIL";
+
+                SmtpServer.Port = 587;
+                SmtpServer.Credentials = new System.Net.NetworkCredential("username", "password");
+                SmtpServer.EnableSsl = false;
+
+                SmtpServer.Send(mail);
+                Console.WriteLine("mail Send");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+            }
         }
     }
 }

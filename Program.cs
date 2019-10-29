@@ -8,16 +8,16 @@ namespace MailtrapConsoleApp
     {
         static void Main(string[] args)
         {
-            //Papercut();
+            LocalSMTPServer();
             //MailtrapSMTPServer();
-            GmailSMTPServer();
+            //GmailSMTPServer();
         }
 
 
         /// <summary>
         /// https://github.com/ChangemakerStudios/Papercut/releases
         /// </summary>
-        static void Papercut()
+        static void LocalSMTPServer()
         {
             var client = new SmtpClient("127.0.0.1", 25);
             client.Send("from@example.com", "to@example.com", "Hello", "testbody");
